@@ -2,7 +2,7 @@ project:
   output-dir: _docs
 
 website:
-  title: "wandb"
+  title: "wandb Tutorial"
   site-url: "https://Lekja00160612.github.io/wandb"
   description: "Wandb tutorial written in nbdev for Gradients Tech internal usage"
   repo-branch: main
