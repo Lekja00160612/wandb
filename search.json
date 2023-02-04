@@ -1,0 +1,163 @@
+[
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "Say hello to Wandb",
+    "section": "",
+    "text": "Wandb is an experiment management and model tracking platform for machine learning. It provides a platform for logging, visualizing, and comparing the performance of machine learning models."
+  },
+  {
+    "objectID": "intro.html#why-is-wandb",
+    "href": "intro.html#why-is-wandb",
+    "title": "Say hello to Wandb",
+    "section": "Why is Wandb ?",
+    "text": "Why is Wandb ?\n\nRead this if you wonder why we choose using Wandb instead of Tensorboard. If you don’t, you can read this just for more knowdledge.\n\nYou may know about Tensorboard, which also provides the visualization and tooling needed for machine learning experimentation. However, Wandb goes beyond what TensorBoard offers:\n\nEasy to use: Wandb has a simple and intuitive interface that makes it easy to log, visualize, and compare machine learning experiments.\nCollaboration: Wandb provides collaboration tools to enable teams to work together on experiments and share results with each other.\nVersatile: Wandb integrates with a wide range of machine learning frameworks and libraries, making it a flexible and powerful tool for experiment management.\nAdvanced visualizations: Wandb provides advanced visualizations for comparing experiments, including scatter plots, histograms, and 3D plots, which make it easier to understand and interpret results.\nModel analysis: Wandb provides a range of tools for analyzing model performance, including hyperparameter tuning, model comparison, and feature importance analysis.\nModel reproducibility: Wandb makes it easy to store and reproduce experiments, including code, data, and results, ensuring that experiments can be repeated and validated.\nCloud-based: Wandb is cloud-based, which means that users can access their experiments and results from anywhere and don’t have to worry about managing infrastructure.\n\nTherefore, Wandb is a suitable alternative for Tensorboard"
+  },
+  {
+    "objectID": "intro.html#how-is-wandb",
+    "href": "intro.html#how-is-wandb",
+    "title": "Say hello to Wandb",
+    "section": "How is Wandb ?",
+    "text": "How is Wandb ?"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Wandb Tutorial",
+    "section": "",
+    "text": "Purpose of this tutorial\n\nIntroduction to wandb\nLearn about wandb step by step\nGive a code example using wandb in training a model. If you are confident in your ability to learn from example, read this first.\n\n\n\n\n:))))))))"
+  },
+  {
+    "objectID": "02_hands-on/02_configuration.html",
+    "href": "02_hands-on/02_configuration.html",
+    "title": "Configuration with wandb.config",
+    "section": "",
+    "text": "Used to save your training configuration and any other independent variables for your experiments\nYou can send a nested dictionary in config, wandb will flatten the names using dots in our backend\nRecommended way: avoid using dots in config variable names, and use a dash or underscore instead"
+  },
+  {
+    "objectID": "02_hands-on/02_configuration.html#simple-example",
+    "href": "02_hands-on/02_configuration.html#simple-example",
+    "title": "Configuration with wandb.config",
+    "section": "Simple Example",
+    "text": "Simple Example\n\nwandb.config.epochs = 4\nwandb.config.batch_size = 32\n# you can also initialize your run with a config\nwandb.init(config={\"epochs\": 4})"
+  },
+  {
+    "objectID": "02_hands-on/02_configuration.html#efficient-initialization",
+    "href": "02_hands-on/02_configuration.html#efficient-initialization",
+    "title": "Configuration with wandb.config",
+    "section": "Efficient Initialization",
+    "text": "Efficient Initialization\n\nwandb.init(config={\"epochs\": 4, \"batch_size\": 32})\n# later\nwandb.config.update({\"lr\": 0.1, \"channels\": 16})"
+  },
+  {
+    "objectID": "02_hands-on/02_configuration.html#other-ways-to-config",
+    "href": "02_hands-on/02_configuration.html#other-ways-to-config",
+    "title": "Configuration with wandb.config",
+    "section": "Other ways to config",
+    "text": "Other ways to config\n\nUsing argparse\n\nThis is convenient for quickly testing different hyperparameter values from the command line.\n\n\nimport argparse\n\nwandb.init(config={\"lr\": 0.1})\nwandb.config.epochs = 4\n\nparser = argparse.ArgumentParser()\nparser.add_argument('-b', '--batch-size', type=int, default=8, metavar='N',\n                     help='input batch size for training (default: 8)')\nargs = parser.parse_args()\nwandb.config.update(args) # adds all of the arguments as config variables\n\n\n\nUsing absl.FLAGS\n\nfrom absl import flags\n\nFLAGS = flags.FLAGS\n\nflags.DEFINE_string(\"model\", None, \"model to run\") # name, default, help\nwandb.config.update(flags.FLAGS) # adds all absl flags to config\n\n\n\nUsing File-Based Configs\n\nCreate a config-defaults.yaml file, it will automatically be loaded into wandb.config.\n\n\n# sample for `config-defaults.yaml` file\nepochs:\n  desc: Number of epochs to train over\n  value: 100\nbatch_size:\n  desc: Size of each mini-batch\n  value: 32"
+  },
+  {
+    "objectID": "02_hands-on/02_configuration.html#update-config-files",
+    "href": "02_hands-on/02_configuration.html#update-config-files",
+    "title": "Configuration with wandb.config",
+    "section": "Update Config Files",
+    "text": "Update Config Files\n\nYou can use the public API to add values your config file, even after the run has finished.\n\n\nimport wandb\napi = wandb.Api()\nrun = api.run(\"username/project/run_id\")\nrun.config[\"foo\"] = 32\nrun.update()\n\n\n\n\n\n\n\nNote\n\n\n\nClick here for more about wandb.config."
+  },
+  {
+    "objectID": "02_hands-on/04_alert.html",
+    "href": "02_hands-on/04_alert.html",
+    "title": "Send Alerts with wandb.alert",
+    "section": "",
+    "text": "Turn on wandb.alert() in your Wandb. You can choose to receive alert via Email or Slack. You can turn other events on as well.\n\n\n\n\nTurn on alert like this\n\n\n\nAdd wandb.alert() to Your Code"
+  },
+  {
+    "objectID": "02_hands-on/04_alert.html#syntax",
+    "href": "02_hands-on/04_alert.html#syntax",
+    "title": "Send Alerts with wandb.alert",
+    "section": "Syntax",
+    "text": "Syntax\n\nwandb.alert(\n    title=\"Until I found you\", \n    text='I would never fall in love again until I found her. I said, \"I would never fall unless it\\'s you I fall into\". I was lost within the darkness, but then I found her. I found you.'\n)\n\nCheck your Email/ Slack for the alert message. If you do not receive it, check your wandb setting or your spam mail."
+  },
+  {
+    "objectID": "02_hands-on/04_alert.html#example",
+    "href": "02_hands-on/04_alert.html#example",
+    "title": "Send Alerts with wandb.alert",
+    "section": "Example",
+    "text": "Example\n\nimport wandb\nfrom wandb import AlertLevel\nimport random\n\nfirst_dice = random.randint(1, 6)\nsecond_dice = random.randint(1, 6)\n\nwandb.alert(\n    title=\"Sum of 2 dices\", \n    text=f\"You get {first_dice + second_dice}, wowwwwwwwwwwwwwwwww\",\n    level=AlertLevel.WARN\n)\n\n\n\n\n\n\n\nNote\n\n\n\nClick here for more about wanda.alert()."
+  },
+  {
+    "objectID": "02_hands-on/05_dashboard.html",
+    "href": "02_hands-on/05_dashboard.html",
+    "title": "Dashboards",
+    "section": "",
+    "text": "Note\n\n\n\nClick here for more about dashboards."
+  },
+  {
+    "objectID": "02_hands-on/03_log.html",
+    "href": "02_hands-on/03_log.html",
+    "title": "Log Data with wandb.log",
+    "section": "",
+    "text": "wandb.log({\"loss\": 0.314, \"epoch\": 5,\n           \"inputs\": wandb.Image(inputs),\n           \"logits\": wandb.Histogram(ouputs),\n           \"captions\": wandb.Html(captions)})\n\n\n\n\n\n\n\nNote\n\n\n\nClick here for more about wandb.log()."
+  },
+  {
+    "objectID": "02_hands-on/01_initialization.html",
+    "href": "02_hands-on/01_initialization.html",
+    "title": "Initialize with wandb.init()",
+    "section": "",
+    "text": "import wandb\n\n# Login into wandb\nwandb.login()\n\n# Initialize a new run\nwandb.init()\n\nAfter initializing, wandb provides you a URL for viewing project and run on its server. Let’s make a fake training process:\n\nimport random\n\nepochs = 10\noffset = random.random() / 5\nfor epoch in range(2, epochs):\n    acc = 1 - 2 ** -epoch - random.random() / epoch - offset\n    loss = 2 ** -epoch + random.random() / epoch + offset\n\n    wandb.log({\"acc\": acc, \"loss\": loss})\n\nNow go to the URL to check the result: \nRemember to finish the run:\n\n# Mark the run as finished\nwandb.finish()\n\n\n\n\n\n\n\nNote\n\n\n\nTake a look at wandb.init() reference document."
+  },
+  {
+    "objectID": "installation.html",
+    "href": "installation.html",
+    "title": "Installation",
+    "section": "",
+    "text": "Sign up for a free account at wandb’s site and then login to your wandb account.\n\n\n\nInstall the CLI and Python library for interacting with the wandb API:\n\npip install wandb\n\n\n\n\nAccess this page for getting API Key fast.\n\n\n\n\nwandb login\n\nor\n\nwandb login --host=http://wandb.your-shared-local-host.com`\n\nWhile running, wandb asks you to type the API key which you get from the above page."
+  },
+  {
+    "objectID": "installation.html#whats-next",
+    "href": "installation.html#whats-next",
+    "title": "Installation",
+    "section": "What’s next?",
+    "text": "What’s next?"
+  },
+  {
+    "objectID": "code_example.html",
+    "href": "code_example.html",
+    "title": "Example code",
+    "section": "",
+    "text": "Install dependencies, this will take a while to install wandb\n\n!pip install wandb -qU\n\nImport packages\n\nimport torch\nimport torchvision\nimport torch.nn as nn\nimport torch.nn.functional as F\nimport torch.optim as optim\nimport wandb\nimport matplotlib.pyplot as plt\nimport math"
+  },
+  {
+    "objectID": "code_example.html#wandb-initiation",
+    "href": "code_example.html#wandb-initiation",
+    "title": "Example code",
+    "section": "Wandb initiation",
+    "text": "Wandb initiation\nGet API key and log into your wandb acount\n\nwandb.login()\n\n\n\n\nThe output will be like this\n\n\nThen we init wandb using project name (example), display name for this run (MNIST Handwritten Digit Recognition) and config for training model. Then we can get the config back for using in programming.\n\nwandb.init(\n    project='example',\n    name='MNIST Handwritten Digit Recognition',\n    config = {\n        'n_epochs': 3,\n        'batch_size': 128,\n        'learning_rate': 0.01,\n        'log_interval': 10,\n        'random_seed': 1\n    }\n)\nconfig = wandb.config\ntorch.backends.cudnn.enabled = False\ntorch.manual_seed(config.random_seed)\n\n\n\n\nThe output of initiation\n\n\nAs you can see, the result will be displayed at https://wandb.ai/gradients_/example (because my team’s name is gradients_ and my project name is example)"
+  },
+  {
+    "objectID": "code_example.html#data-and-model-preparation",
+    "href": "code_example.html#data-and-model-preparation",
+    "title": "Example code",
+    "section": "Data and model preparation",
+    "text": "Data and model preparation\nThen we load the MNIST dataset from torch’s DataLoader\n\ntrain_loader = torch.utils.data.DataLoader(\n    torchvision.datasets.MNIST(root='.', train=True, download=True,\n                               transform=torchvision.transforms.Compose([\n                                   torchvision.transforms.ToTensor(),\n                                   torchvision.transforms.Normalize((0.1307,), (0.3081,))\n                                    ])\n                                ), batch_size=config.batch_size, shuffle=True, num_workers=2)\ntest_loader = torch.utils.data.DataLoader(\n    torchvision.datasets.MNIST(root='.', train=False, download=True,\n                               transform=torchvision.transforms.Compose([\n                                   torchvision.transforms.ToTensor(),\n                                   torchvision.transforms.Normalize((0.1307,), (0.3081,))\n                                    ])\n                               ), batch_size=config.batch_size, shuffle=False, num_workers=2)\n\nNow let’s take a look at some examples\n\nexamples = enumerate(test_loader)\nbatch_idx, (example_data, example_targets) = next(examples)\nprint(f\"Example's shape: {example_data.shape}\")\n\nfig = plt.figure()\nfor i in range(6):\n    plt.subplot(2,3,i+1)\n    plt.tight_layout()\n    plt.imshow(example_data[i][0], cmap='gray', interpolation='none')\n    plt.title(\"Ground Truth: {}\".format(example_targets[i]))\n    plt.xticks([])\n    plt.yticks([])\nfig\n\nDefine model architecture. Because this is just a small example, i only use a simple architecture.\n\nclass MNIST_model(nn.Module):\n    def __init__(self):\n        super(MNIST_model, self).__init__()\n        self.conv1 = nn.Conv2d(1, 10, kernel_size=5)\n        self.conv2 = nn.Conv2d(10, 20, kernel_size=5)\n        self.conv2_drop = nn.Dropout2d()\n        self.fc1 = nn.Linear(320, 50)\n        self.fc2 = nn.Linear(50, 10)\n    def forward(self, x):\n        x = F.relu(F.max_pool2d(self.conv1(x), 2))\n        x = F.relu(F.max_pool2d(self.conv2_drop(self.conv2(x)), 2))\n        x = x.view(-1, 320)\n        x = F.relu(self.fc1(x))\n        x = F.dropout(x, training=self.training)\n        x = self.fc2(x)\n        return F.log_softmax(x)\n\nNow let’s initialize the network and the optimizer\n\nmodel = MNIST_model()\noptimizer = optim.Adam(model.parameters(), \n                      lr=config.learning_rate)"
+  },
+  {
+    "objectID": "code_example.html#training-and-evaluation-process",
+    "href": "code_example.html#training-and-evaluation-process",
+    "title": "Example code",
+    "section": "Training and evaluation process",
+    "text": "Training and evaluation process\nDefine the training function.\n\ndef train(model, train_loader):\n    model.train()\n    n_steps_per_epoch = math.ceil(len(train_loader.dataset) / config.batch_size)\n\n    for step, (images, labels) in enumerate(train_loader):\n        outputs = model(images)\n        loss = F.nll_loss(outputs, labels)\n\n        optimizer.zero_grad()\n        loss.backward()\n        optimizer.step()\n\n        metrics = {\"train/train_loss\": loss, \n                    \"train/epoch\": (step + 1 + (n_steps_per_epoch * epoch)) / n_steps_per_epoch\n                   }\n\n        if step + 1 < n_steps_per_epoch:\n            wandb.log(metrics)\n\n        if step % config.log_interval == 0:            \n            torch.save(model.state_dict(), 'model.pth')\n            torch.save(optimizer.state_dict(), 'optimizer.pth')\n\n    return model\n\nDefine the evaluation function\n\ndef eval(model, test_loader):\n    model.eval()\n    loss = 0\n    with torch.inference_mode():\n        correct = 0\n        for i, (images, labels) in enumerate(test_loader):\n            outputs = model(images)\n            loss += F.nll_loss(outputs, labels)*labels.size(0)\n\n            _, predicted = torch.max(outputs.data, 1)\n            correct += (predicted == labels).sum().item()\n\n            # Plot some prediction using the first batch of test_loader, the plots will appear in wandb UI\n            if i==0:\n                probs = outputs.softmax(dim=1)\n                table = wandb.Table(columns=[\"image\", \"pred\", \"target\"]+[f\"score_{j}\" for j in range(10)])\n                for img, pred, targ, prob in zip(images.to(\"cpu\"), predicted.to(\"cpu\"), labels.to(\"cpu\"), probs.to(\"cpu\")):\n                    table.add_data(wandb.Image(img[0].numpy()*255), pred, targ, *prob.numpy())\n                wandb.log({\"predictions_table\":table}, commit=False)\n\nTrain the model\n\nfor epoch in range(1, config.n_epochs + 1):\n    model = train(model, train_loader)\n    eval(model, test_loader)"
+  },
+  {
+    "objectID": "code_example.html#testing",
+    "href": "code_example.html#testing",
+    "title": "Example code",
+    "section": "Testing",
+    "text": "Testing\nMake and plot some predictions using the trained model\n\nwith torch.no_grad():\n    output = model(example_data)\n\nfig = plt.figure()\nfor i in range(6):\n    plt.subplot(2,3,i+1)\n    plt.tight_layout()\n    plt.imshow(example_data[i][0], cmap='gray', interpolation='none')\n    plt.title(\"Prediction: {}\".format(output.data.max(1, keepdim=True)[1][i].item()))\n    plt.xticks([])\n    plt.yticks([])\nfig"
+  },
+  {
+    "objectID": "code_example.html#wonderful-things-of-wandb",
+    "href": "code_example.html#wonderful-things-of-wandb",
+    "title": "Example code",
+    "section": "Wonderful things of wandb",
+    "text": "Wonderful things of wandb\nGo to your project in wandb (https://wandb.ai/gradients_/example in my case). You can see that there is a run generated from our training. In this run, there are 4 panels: Tables, train, System, Hidden Panels. To learn about training process, head to train panel. \nBecause I only use 2 metrics in the training process, there are 2 graphs in the train panels. Using these graphs, you evaluate the performance of your model to have suitable adjustments \nHead to Tables panel, you can see some predictions from evaluation process that i implement in training iterations."
+  }
+]
